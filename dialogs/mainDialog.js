@@ -56,7 +56,7 @@ class MainDialog extends LogoutDialog {
         // token directly from the prompt itself. There is an example of this in the next method.
         const tokenResponse = stepContext.result;
         if (tokenResponse) {
-            await stepContext.context.sendActivity(tokenResponse);
+            await stepContext.context.sendActivity(tokenResponse.token);
             // return await stepContext.prompt(CONFIRM_PROMPT, 'Would you like to view your token?');
         }
         await stepContext.context.sendActivity('Login was not successful please try again.');

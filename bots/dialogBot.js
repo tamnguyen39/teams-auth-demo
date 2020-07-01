@@ -24,10 +24,18 @@ class DialogBot extends TeamsActivityHandler {
         this.onMessage(async (context, next) => {
             console.log('Running dialog with Message Activity.');
 
-            // Run the Dialog with the new message Activity.
-            // await this.dialog.run(context, this.dialogState);
-            const conversationReference = TurnContext.getConversationReference(context.activity);
-            this.conversationReferences[this.bcid] = conversationReference;
+            if (context.activity.text == 'logout') {
+                const botAdapter = context.adapter;
+                await botAdapter.signOutUser(context, this.dialog.connectionName);
+                await context.sendActivity('You have been signed out.');
+                // return await innerDc.cancelAllDialogs();
+            } else {
+                await context.sendActivity('Please sent post request to http://localhost:3978/api/12956/proactive to login');
+                // Run the Dialog with the new message Activity.
+                // await this.dialog.run(context, this.dialogState);
+                const conversationReference = TurnContext.getConversationReference(context.activity);
+                this.conversationReferences[this.bcid] = conversationReference;
+            }
 
             await next();
         });
